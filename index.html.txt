@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Anti-Cheat Monitor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      padding: 20px;
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Anti-Cheat Monitor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      padding: 20px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      background: #fff;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background: #eee;
+    }
+  </style>
+</head>
+<body>
+  <h1>📊 Anti-Cheat Monitor</h1>
+  <table id="data-table">
+    <thead>
+      <tr>
+        <th>Jogador</th>
+        <th>Parâmetro</th>
+        <th>Valor</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const databaseUrl = "https://anticheatmonitor-default-rtdb.firebaseio.com/.json";
+
+    function fetchData() {
+      fetch(databaseUrl)
+        .then(res => res.json())
+        .then(data => {
+          const tbody = document.querySelector("#data-table tbody");
+          tbody.innerHTML = "";
+
+          for (const player in data) {
+            const valores = data[player];
+            for (const parametro in valores) {
+              const valor = valores[parametro];
+              const row = document.createElement("tr");
+              row.innerHTML = `
+                <td>${player}</td>
+                <td>${parametro}</td>
+                <td>${valor}</td>
+              `;
+              tbody.appendChild(row);
+            }
+          }
+        })
+        .catch(err => console.error("Erro ao buscar dados:", err));
+    }
+
+    // Buscar dados a cada 3 segundos
+    fetchData();
+    setInterval(fetchData, 3000);
+  </script>
+</body>
+</html>
