@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Anti-Cheat Monitor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      padding: 20px;
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Anti-Cheat Monitor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      padding: 20px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      background: #fff;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background: #eee;
+    }
+  </style>
+</head>
+<body>
+  <h1>📊 Anti-Cheat Monitor</h1>
+  <table id="data-table">
+    <thead>
+      <tr>
+        <th>Jogador</th>
+        <th>Parâmetro</th>
+        <th>Valor</th>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Anti-Cheat Monitor</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
+    th { background-color: #f4f4f4; }
+  </style>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+</head>
+<body>
+
+  <h1>Anti-Cheat Monitor</h1>
+  <p>Monitoramento em tempo real dos jogadores:</p>
+
+  <table id="tabela">
+    <thead>
+      <tr>
+        <th>Jogador</th>
+        <th>Arrasto Traseiro</th>
+        <th>Downforce Traseiro</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    // 🔧 SUBSTITUA pelos dados do seu Firebase abaixo:
+    const firebaseConfig = {
+  apiKey: "AIzaSyBg4Sm4l5hn0XYv8vo9mIVa83ZFVNnNpEQ",
+  authDomain: "anticheatmonitor.firebaseapp.com",
+  databaseURL: "https://anticheatmonitor-default-rtdb.firebaseio.com",
+  projectId: "anticheatmonitor",
+  storageBucket: "anticheatmonitor.firebasestorage.app",
+  messagingSenderId: "781845923657",
+  appId: "1:781845923657:web:d6dd6b33c03ea51fa2bc98"
+};
+
+
+    // Inicializa Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    // Atualiza a tabela automaticamente quando os dados mudam
+    function atualizarTabela(snapshot) {
+      const tabela = document.querySelector("#tabela tbody");
+      tabela.innerHTML = ""; // Limpa tabela
+
+      const dados = snapshot.val();
+      if (!dados) return;
+
+      for (const jogador in dados) {
+        const linha = document.createElement("tr");
+
+        const arrasto = dados[jogador]["Arrasto Traseiro"] ?? "-";
+        const downforce = dados[jogador]["Downforce Traseiro"] ?? "-";
+
+        linha.innerHTML = `<td>${jogador}</td><td>${arrasto}</td><td>${downforce}</td>`;
+        tabela.appendChild(linha);
+      }
+    }
+
+    // Observador do Firebase em tempo real
+    db.ref().on("value", atualizarTabela);
+  </script>
+
+</body>
+</html>
+
